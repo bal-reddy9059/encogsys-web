@@ -80,11 +80,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/logo-icon.png", type: "image/png" },
+      { url: "/logo-icon.png?v=20", type: "image/png", sizes: "any" },
+      { url: "/icon.svg?v=20", type: "image/svg+xml" },
+      { url: "/favicon.ico?v=20" },
     ],
-    apple: [{ url: "/apple-icon.png" }],
-    shortcut: ["/logo-icon.png"],
+    apple: [{ url: "/apple-icon.png?v=20", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/logo-icon.png?v=20"],
   },
   manifest: "/manifest.webmanifest",
   appleWebApp: {

@@ -49,6 +49,6 @@ systemctl reload nginx
 echo ""
 echo "Next steps:"
 echo "  1. Point DNS A records for $DOMAIN and www → this VPS IP"
-echo "  2. sudo certbot --nginx -d $DOMAIN -d www.$DOMAIN"
+echo "  2. sudo certbot --nginx -d www.$DOMAIN -d $DOMAIN"
 echo "  3. Add GitHub secrets: VPS_HOST, VPS_USER (root), VPS_SSH_KEY"
 echo "Done. App should be on http://$(hostname -I | awk '{print $1}'):3000 behind Nginx :80"

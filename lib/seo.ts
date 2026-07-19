@@ -1,5 +1,5 @@
 function resolveSiteUrl() {
-  const fallback = "https://encogsys.com"
+  const fallback = "https://www.encogsys.com"
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "")
   if (!raw) return fallback
   try {

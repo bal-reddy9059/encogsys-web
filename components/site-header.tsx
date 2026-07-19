@@ -202,10 +202,9 @@ export function SiteHeader() {
                   aria-current={isActive ? "page" : undefined}
                   className={`block rounded-2xl px-4 py-3 font-display text-base font-semibold tracking-wide transition-colors sm:text-lg ${
                     isActive
-                      ? "bg-sky-500 text-white dark:bg-accent"
-                      : "hover:bg-sky-50 hover:text-sky-700 dark:hover:bg-muted dark:hover:text-accent"
+                      ? "bg-sky-500 text-white dark:bg-sky-500"
+                      : "text-[var(--sidebar-text)] hover:bg-sky-500 hover:text-white dark:hover:bg-sky-500 dark:hover:text-white"
                   }`}
-                  style={isActive ? undefined : { color: "var(--sidebar-text)" }}
                 >
                   {item.label}
                 </a>

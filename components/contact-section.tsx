@@ -8,15 +8,6 @@ type Status = "idle" | "loading" | "success" | "pending" | "error"
 const CONTACT_EMAIL =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "admin@encogsys.com"
 
-function isActivationMessage(message: string) {
-  const lower = message.toLowerCase()
-  return (
-    lower.includes("activation") ||
-    lower.includes("activate form") ||
-    lower.includes("activate")
-  )
-}
-
 export function ContactSection() {
   const [status, setStatus] = useState<Status>("idle")
   const [feedback, setFeedback] = useState("")
@@ -47,70 +38,43 @@ export function ContactSection() {
     setFeedback("")
 
     try {
-      // Submit from the browser (localhost / live site) — FormSubmit requires a web server origin
-      const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({
-          name,
-          email,
-          _replyto: email,
-          subject: subject || "Website inquiry",
-          message,
-          "Full Name": name,
-          "Email Address": email,
-          Subject: subject || "Website inquiry",
-          Message: message,
-          _subject: `ENCOGSYS Contact — ${subject || "New inquiry"} from ${name}`,
-          _template: "table",
-          _captcha: "false",
-        }),
+        body: JSON.stringify({ name, email, subject, message }),
       })
 
       const result = (await response.json().catch(() => null)) as {
-        success?: string | boolean
+        success?: boolean
+        pending?: boolean
         message?: string
+        error?: { message?: string }
       } | null
 
-      const providerMessage = result?.message || ""
-
-      // First-time FormSubmit setup — one click in the inbox activates forever
-      if (isActivationMessage(providerMessage)) {
+      if (result?.pending) {
         setStatus("pending")
         setFeedback(
-          `One-time setup: open the inbox for ${CONTACT_EMAIL}, find the email from FormSubmit, and click “Activate Form”. Then submit again — messages will go through.`,
+          result.message ||
+            `One-time setup: open the inbox for ${CONTACT_EMAIL}, find the email from FormSubmit, and click “Activate Form”. Then submit again.`,
         )
         return
       }
 
-      const ok =
-        response.ok &&
-        (result?.success === true ||
-          result?.success === "true" ||
-          providerMessage.toLowerCase().includes("success"))
-
-      if (!ok) {
-        if (
-          providerMessage.toLowerCase().includes("web server") ||
-          providerMessage.toLowerCase().includes("html files")
-        ) {
-          setStatus("error")
-          setFeedback(
-            "Please open the site via http://localhost:3000 (or your live domain), not as a downloaded HTML file. Then try again.",
-          )
-          return
-        }
-
+      if (!response.ok || !result?.success) {
         setStatus("error")
-        setFeedback(providerMessage || `Unable to send. Please email ${CONTACT_EMAIL} directly.`)
+        setFeedback(
+          result?.error?.message ||
+            result?.message ||
+            `Unable to send. Please email ${CONTACT_EMAIL} directly.`,
+        )
         return
       }
 
       setStatus("success")
-      setFeedback(`Message sent successfully to ${CONTACT_EMAIL}.`)
+      setFeedback(result.message || `Message sent successfully to ${CONTACT_EMAIL}.`)
       form.reset()
     } catch {
       setStatus("error")

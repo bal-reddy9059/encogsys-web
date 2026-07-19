@@ -125,14 +125,6 @@ export async function POST(request: Request) {
         success: true,
         status: 201,
         message: `Message sent successfully. We received your details at ${CONTACT_TO}.`,
-        data: {
-          to: CONTACT_TO,
-          name,
-          email,
-          subject: subject || "Website inquiry",
-          message,
-          createdAt: new Date().toISOString(),
-        },
       },
       {
         status: 201,

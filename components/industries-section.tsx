@@ -18,29 +18,21 @@ import { useEffect, useRef, useState } from "react"
 type Industry = {
   icon: LucideIcon
   title: string
-  description: React.ReactNode
+  description: string
 }
 
 const industries: Industry[] = [
   {
     icon: Landmark,
     title: "Banking",
-    description: (
-      <>
-        Digital banking platforms, payments, risk and compliance solutions for{" "}
-        <span className="text-accent underline underline-offset-2">financial institutions.</span>
-      </>
-    ),
+    description:
+      "Digital banking platforms, payments, risk and compliance solutions for financial institutions.",
   },
   {
     icon: ShieldCheck,
     title: "Insurance",
-    description: (
-      <>
-        Policy, claims and <span className="text-accent underline underline-offset-2">underwriting technology</span>{" "}
-        that improves accuracy and customer experience.
-      </>
-    ),
+    description:
+      "Policy, claims and underwriting technology that improves accuracy and customer experience.",
   },
   {
     icon: Heart,
@@ -50,22 +42,12 @@ const industries: Industry[] = [
   {
     icon: GraduationCap,
     title: "Education",
-    description: (
-      <>
-        EdTech, LMS and student information systems that transform teaching and{" "}
-        <span className="text-accent underline underline-offset-2">learning.</span>
-      </>
-    ),
+    description: "EdTech, LMS and student information systems that transform teaching and learning.",
   },
   {
     icon: ShoppingBag,
     title: "Retail",
-    description: (
-      <>
-        Omnichannel commerce, inventory and customer experience platforms for{" "}
-        <span className="text-accent underline underline-offset-2">modern retailers.</span>
-      </>
-    ),
+    description: "Omnichannel commerce, inventory and customer experience platforms for modern retailers.",
   },
   {
     icon: Settings,

@@ -26,47 +26,80 @@ export const metadata: Metadata = {
       "Senior software and BPO roles for professionals ready to grow with ENCOGSYS.",
     url: absoluteUrl("/careers"),
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: `Careers at ${siteConfig.name}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `Careers at ${siteConfig.name}`,
     description: "Explore open software and BPO positions at ENCOGSYS.",
+    images: ["/opengraph-image"],
   },
 }
 
 export default function CareersPage() {
-  const jobPostings = positions.map((position) => ({
+  const jobPostings = {
     "@context": "https://schema.org",
-    "@type": "JobPosting",
-    title: position.title,
-    description: position.summary,
-    datePosted: position.datePosted,
-    validThrough: position.validThrough,
-    employmentType: "FULL_TIME",
-    hiringOrganization: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      sameAs: siteConfig.url,
-      logo: absoluteUrl("/logo-icon.png"),
-    },
-    jobLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Bengaluru",
-        addressRegion: "Karnataka",
-        addressCountry: "IN",
-      },
-    },
-    applicantLocationRequirements: {
-      "@type": "Country",
-      name: "India",
-    },
-    experienceRequirements: position.experience,
-    industry: position.category === "Software" ? "Software" : "Business Process Outsourcing",
-    url: absoluteUrl("/careers"),
-    directApply: false,
-  }))
+    "@graph": positions.map((position) => {
+      const isRemote = position.location.toLowerCase().includes("remote")
+      const isHybrid = position.location.toLowerCase().includes("hybrid")
+
+      return {
+        "@type": "JobPosting",
+        title: position.title,
+        description: position.summary,
+        identifier: {
+          "@type": "PropertyValue",
+          name: siteConfig.name,
+          value: position.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+        },
+        datePosted: position.datePosted,
+        validThrough: position.validThrough,
+        employmentType: "FULL_TIME",
+        hiringOrganization: {
+          "@type": "Organization",
+          name: siteConfig.name,
+          sameAs: siteConfig.url,
+          logo: absoluteUrl("/logo-icon.png"),
+        },
+        jobLocation: {
+          "@type": "Place",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: siteConfig.address.street,
+            addressLocality: siteConfig.address.city,
+            addressRegion: siteConfig.address.region,
+            postalCode: siteConfig.address.postalCode,
+            addressCountry: siteConfig.address.country,
+          },
+        },
+        ...(isRemote || isHybrid
+          ? {
+              jobLocationType: "TELECOMMUTE",
+              applicantLocationRequirements: {
+                "@type": "Country",
+                name: "India",
+              },
+            }
+          : {
+              applicantLocationRequirements: {
+                "@type": "Country",
+                name: "India",
+              },
+            }),
+        experienceRequirements: position.experience,
+        industry: position.category === "Software" ? "Information Technology" : "Business Process Outsourcing",
+        url: absoluteUrl("/careers"),
+        directApply: false,
+      }
+    }),
+  }
 
   return (
     <main className="min-h-screen bg-background text-foreground">

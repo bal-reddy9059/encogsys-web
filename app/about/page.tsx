@@ -23,7 +23,7 @@ export const metadata: Metadata = {
       "Encogsys empowers businesses with innovative technology solutions that drive digital transformation, operational excellence, and sustainable growth.",
     url: absoluteUrl("/about"),
     type: "website",
-    images: [{ url: absoluteUrl("/about-office.jpg"), alt: "ENCOGSYS team" }],
+    images: [{ url: absoluteUrl("/about-office.jpg"), width: 1200, height: 630, alt: "ENCOGSYS team" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -25,7 +25,7 @@ export function JsonLd() {
       width: 512,
       height: 512,
     },
-    image: absoluteUrl("/logo-full.png"),
+    image: [absoluteUrl("/logo-full.png"), absoluteUrl("/about-office.jpg")],
     description: siteConfig.description,
     email: siteConfig.email,
     telephone: siteConfig.phone,
@@ -35,6 +35,7 @@ export function JsonLd() {
       address: {
         "@type": "PostalAddress",
         addressLocality: siteConfig.address.city,
+        addressRegion: siteConfig.address.region,
         addressCountry: siteConfig.address.country,
       },
     },
@@ -72,19 +73,19 @@ export function JsonLd() {
     areaServed: [
       { "@type": "Country", name: "India" },
       { "@type": "AdministrativeArea", name: "Karnataka" },
+      { "@type": "City", name: "Bengaluru" },
     ],
     knowsAbout: services,
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "ENCOGSYS Services",
-      itemListElement: services.map((name, index) => ({
+      itemListElement: services.map((name) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
           name,
           provider: { "@id": `${siteConfig.url}/#organization` },
         },
-        position: index + 1,
       })),
     },
   }
@@ -102,32 +103,6 @@ export function JsonLd() {
     copyrightHolder: { "@id": `${siteConfig.url}/#organization` },
   }
 
-  const webPages = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "ENCOGSYS Site Pages",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        url: siteConfig.url,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "About",
-        url: absoluteUrl("/about"),
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Careers",
-        url: absoluteUrl("/careers"),
-      },
-    ],
-  }
-
   return (
     <>
       <script
@@ -137,10 +112,6 @@ export function JsonLd() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPages) }}
       />
     </>
   )

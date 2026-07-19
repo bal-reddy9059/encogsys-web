@@ -91,21 +91,31 @@ export function HeroSection() {
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-svh w-full max-w-7xl flex-col items-start justify-center px-5 pb-32 pt-24 text-left sm:px-8 sm:pb-24 sm:pt-28 lg:px-10">
-        <div key={active} className="animate-hero-copy max-w-4xl">
-          <p className="mb-5 flex max-w-xs flex-wrap items-center justify-start gap-x-2 gap-y-1 font-sans text-xs font-semibold uppercase tracking-widest text-white/70 sm:mb-6 sm:max-w-none sm:gap-3">
-            <span className="h-px w-4 shrink-0 bg-[#3B82F6] sm:w-6" aria-hidden="true" />
-            <span>{slide.eyebrow}</span>
+        <div className="max-w-4xl">
+          <p className="mb-3 font-display text-2xl font-bold tracking-[0.2em] text-white sm:text-3xl">
+            ENCOGSYS
           </p>
-
-          <h1 className="font-display text-3xl font-bold uppercase leading-snug tracking-wide text-white min-[400px]:text-4xl sm:text-5xl sm:leading-tight md:text-6xl lg:text-7xl lg:leading-none">
-            <span className="block">{slide.titleBefore}</span>
-            <span className="block text-[#3B82F6]">{slide.accent}</span>
-            <span className="block">{slide.titleAfter}</span>
+          <h1 className="font-display text-base font-semibold tracking-wide text-white/90 sm:text-lg md:text-xl">
+            Engineering Innovation. Empowering Growth.
           </h1>
 
-          <p className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-white/75 text-pretty sm:mt-8 sm:text-lg">
-            {slide.description}
-          </p>
+          <div key={active} className="animate-hero-copy mt-6 sm:mt-8">
+            <p className="mb-5 flex max-w-xs flex-wrap items-center justify-start gap-x-2 gap-y-1 font-sans text-xs font-semibold uppercase tracking-widest text-white/70 sm:mb-6 sm:max-w-none sm:gap-3">
+              <span className="h-px w-4 shrink-0 bg-[#3B82F6] sm:w-6" aria-hidden="true" />
+              <span>{slide.eyebrow}</span>
+            </p>
+
+            {/* Rotating slide copy stays visual — not the page H1 (stable brand heading above). */}
+            <p className="font-display text-3xl font-bold uppercase leading-snug tracking-wide text-white min-[400px]:text-4xl sm:text-5xl sm:leading-tight md:text-6xl lg:text-7xl lg:leading-none">
+              <span className="block">{slide.titleBefore}</span>
+              <span className="block text-[#3B82F6]">{slide.accent}</span>
+              <span className="block">{slide.titleAfter}</span>
+            </p>
+
+            <p className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-white/75 text-pretty sm:mt-8 sm:text-lg">
+              {slide.description}
+            </p>
+          </div>
         </div>
 
         <div className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 pr-14 sm:mt-10 sm:max-w-none sm:flex-row sm:items-center sm:justify-start sm:gap-4 sm:pr-0">

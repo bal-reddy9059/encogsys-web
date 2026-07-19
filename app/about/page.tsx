@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { SiteHeader } from "@/components/site-header"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
@@ -60,9 +59,7 @@ export default function AboutPage() {
           { name: "About", path: "/about" },
         ]}
       />
-      <SiteHeader />
-
-      <article className="mx-auto max-w-5xl px-5 pb-12 pt-28 text-center sm:pb-16 sm:pt-32 lg:px-8">
+      <article className="mx-auto max-w-5xl px-5 pb-12 pt-10 text-center sm:pb-16 sm:pt-14 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-6 text-xs text-muted-foreground">
           <ol className="flex flex-wrap items-center justify-center gap-2">
             <li>

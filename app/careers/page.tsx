@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, Briefcase, Clock, MapPin } from "lucide-react"
-import { SiteHeader } from "@/components/site-header"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { positions } from "@/lib/positions"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
@@ -81,9 +80,7 @@ export default function CareersPage() {
           { name: "Careers", path: "/careers" },
         ]}
       />
-      <SiteHeader />
-
-      <div className="mx-auto max-w-5xl px-5 pb-12 pt-28 sm:pb-16 sm:pt-32 lg:px-8">
+      <div className="mx-auto max-w-5xl px-5 pb-12 pt-10 sm:pb-16 sm:pt-14 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-6 text-center text-xs text-muted-foreground">
           <ol className="flex flex-wrap items-center justify-center gap-2">
             <li>

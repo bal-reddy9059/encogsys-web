@@ -15,49 +15,29 @@ const navItems = [
   { label: "Contact", id: "contact" },
 ]
 
-const menuItems = [
-  { label: "Home", id: "home" },
-  { label: "About", id: "about" },
-  { label: "Services", id: "services" },
-  { label: "Industries", id: "industries" },
-  { label: "Careers", id: "careers" },
-  { label: "Contact", id: "contact" },
-]
+const menuItems = navItems
 
 const sectionIds = ["home", "clients", "about", "services", "why", "industries", "careers", "contact"]
-
-function sectionHref(id: string, isHomePage: boolean) {
-  if (id === "about" && !isHomePage) return "/about"
-  if (id === "careers" && !isHomePage) return "/careers"
-  return isHomePage ? `#${id}` : `/#${id}`
-}
 
 export function SiteHeader() {
   const pathname = usePathname()
   const isHomePage = pathname === "/"
-  const isAboutPage = pathname === "/about"
-  const isCareersPage = pathname === "/careers"
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [activeId, setActiveId] = useState(
-    isAboutPage ? "about" : isCareersPage ? "careers" : "home"
-  )
+  const [activeId, setActiveId] = useState("home")
 
   // Map non-nav sections to the closest primary nav item for highlighting
-  const spyId =
+  const highlightedId =
     activeId === "clients" ? "home" : activeId === "why" ? "services" : activeId
-  const highlightedId = isAboutPage ? "about" : isCareersPage ? "careers" : spyId
-  // Keep the floating bar visible on every home section (and about/careers pages)
-  const showFloatingBar = isHomePage || isAboutPage || isCareersPage
+
+  // Only show on the hero (#home) — hide while scrolling other home sections
+  const showFloatingBar = activeId === "home"
 
   useEffect(() => {
-    if (isAboutPage || isCareersPage) {
-      setActiveId(isAboutPage ? "about" : "careers")
-      setScrolled(window.scrollY > 24)
-      const onScroll = () => setScrolled(window.scrollY > 24)
-      window.addEventListener("scroll", onScroll, { passive: true })
-      return () => window.removeEventListener("scroll", onScroll)
+    if (!isHomePage) {
+      setMenuOpen(false)
+      return
     }
 
     const onScroll = () => {
@@ -81,7 +61,11 @@ export function SiteHeader() {
       window.removeEventListener("scroll", onScroll)
       window.removeEventListener("hashchange", onScroll)
     }
-  }, [isAboutPage, isCareersPage])
+  }, [isHomePage])
+
+  useEffect(() => {
+    if (activeId !== "home" && menuOpen) setMenuOpen(false)
+  }, [activeId, menuOpen])
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : ""
@@ -97,6 +81,9 @@ export function SiteHeader() {
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
+
+  // Nav only on the home page — visible in light and dark theme
+  if (!isHomePage) return null
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -123,13 +110,13 @@ export function SiteHeader() {
           </div>
 
           <nav className="hidden justify-self-center lg:flex" aria-label="Primary">
-            <ul className="flex items-center gap-0.5 rounded-full bg-white px-1.5 py-1 shadow-sm">
+            <ul className="flex items-center gap-0.5 rounded-full bg-white px-1.5 py-1 shadow-sm dark:bg-white/95">
               {navItems.map((item) => {
                 const isActive = highlightedId === item.id
                 return (
                   <li key={item.label}>
                     <a
-                      href={sectionHref(item.id, isHomePage)}
+                      href={`#${item.id}`}
                       aria-current={isActive ? "page" : undefined}
                       className={`block whitespace-nowrap rounded-full px-3 py-1.5 text-[12px] font-semibold tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 xl:px-3.5 ${
                         isActive
@@ -148,7 +135,7 @@ export function SiteHeader() {
           <div className="flex shrink-0 items-center justify-self-end gap-1.5 sm:gap-2.5">
             <ThemeToggle className="size-8 bg-white text-sky-800 shadow-sm ring-0 hover:bg-white/90 sm:size-10 md:size-10" />
             <a
-              href={sectionHref("contact", isHomePage)}
+              href="#contact"
               className="hidden shrink-0 rounded-full bg-white px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-sky-700 shadow-sm transition-all hover:bg-sky-50 hover:text-sky-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 sm:inline-flex md:px-5 md:py-2.5 md:text-xs"
             >
               GET IN touch
@@ -210,7 +197,7 @@ export function SiteHeader() {
                 style={{ transitionDelay: menuOpen ? `${120 + index * 60}ms` : "0ms" }}
               >
                 <a
-                  href={sectionHref(item.id, isHomePage)}
+                  href={`#${item.id}`}
                   onClick={() => setMenuOpen(false)}
                   aria-current={isActive ? "page" : undefined}
                   className={`block rounded-2xl px-4 py-3 font-display text-base font-semibold tracking-wide transition-colors sm:text-lg ${
@@ -229,7 +216,7 @@ export function SiteHeader() {
 
         <div className="border-t border-border p-5">
           <a
-            href={sectionHref("contact", isHomePage)}
+            href="#contact"
             onClick={() => setMenuOpen(false)}
             className="flex items-center justify-center rounded-full bg-accent px-5 py-3 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-primary"
           >

@@ -52,7 +52,7 @@ export function BrandLogo({
       aria-label="ENCOGSYS home"
     >
       <img
-        src="/logo-icon.png?v=15"
+        src="/logo-icon.png?v=21"
         alt=""
         className={`${iconSize[size]} shrink-0 object-contain object-left`}
         aria-hidden="true"

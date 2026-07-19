@@ -1,6 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 110" role="img" aria-label="ENCOGSYS">
-  <rect width="100" height="110" rx="18" fill="#0a1122"/>
-  <g fill="#38bdf8" transform="translate(8 10) scale(0.84)">
+  <defs>
+    <linearGradient id="encogsysMark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c4a6e"/>
+      <stop offset="55%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <g fill="url(#encogsysMark)" transform="translate(4 5) scale(0.92)">
     <path
       fill-rule="evenodd"
       d="M50 2L94 27v50L50 102 6 77V27L50 2zm0 14L18 34.5v35L50 88l32-18.5v-35L50 16z"

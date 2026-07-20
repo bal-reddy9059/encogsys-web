@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: "/",
+    canonical: siteConfig.url,
   },
   openGraph: {
     type: "website",

@@ -3,9 +3,9 @@ import { absoluteUrl, siteConfig } from "@/lib/seo"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Stable dates help crawlers; bump when content meaningfully changes.
-  const homeUpdated = new Date("2026-07-19")
-  const aboutUpdated = new Date("2026-07-19")
-  const careersUpdated = new Date("2026-07-19")
+  const homeUpdated = new Date("2026-07-20")
+  const aboutUpdated = new Date("2026-07-20")
+  const careersUpdated = new Date("2026-07-20")
 
   return [
     {

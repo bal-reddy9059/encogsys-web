@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "encogsys.com" }],
+      "destination": "https://www.encogsys.com/:path*",
+      "permanent": true
+    }
+  ]
+}

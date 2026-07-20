@@ -13,6 +13,17 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   trailingSlash: false,
+  async redirects() {
+    // Force one canonical host: apex → www
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "encogsys.com" }],
+        destination: "https://www.encogsys.com/:path*",
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {
